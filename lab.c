@@ -100,6 +100,16 @@ char** getAvailablePlanes(Plane* plane, int numberOfPlanes){
 
 void setPlaneType(Plane* plane) {
     int idWing0 = plane->wings->id;
+    int idWingMod = idWing0 % 9;
+    if (idWingMod < 3) {
+        plane->planeType = "small";
+    } else if (idWingMod < 6) {
+        /* code */
+    } else if (idWingMod < 8) {
+        /* code */
+    }
+    
+    
 
 }
 
