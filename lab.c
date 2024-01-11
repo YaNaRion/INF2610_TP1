@@ -8,6 +8,7 @@
 #include <sys/wait.h>
 #include <stdio.h> 
 #include <stdbool.h>
+#include <string.h>
 
 
 struct Plane {
@@ -15,7 +16,7 @@ struct Plane {
     bool isAvailable;
     struct Wheel* wheels;
     struct Wing* wings;
-    char id[];
+    char* id;
 };
 typedef struct Plane Plane;
 
@@ -41,7 +42,6 @@ Wheel* createWheels(int id) {
         id++;
     }
     return wheels;
-    
 }
 
 void populateWingAttributes(Wing* wingParam, long id) {
@@ -69,13 +69,39 @@ Wing* createWings(long id) {
 }
 
 
-void createPlanes(Plane** planes, char** ids, int numberOfPlanes){
+void createPlanes(Plane* planes, char* ids, int numberOfPlanes){
+    long idForWings = 1;
+    int idForWheel = 1;
     for (int i = 0; i < numberOfPlanes; i++){
-        planes[i]->id = ids[i];
+        Plane* tempsPlane;
+        tempsPlane = &(planes[i]);
+        planes[i].id = ids;
+        
+        tempsPlane->id = ids;
+        tempsPlane->isAvailable = true;
+        tempsPlane->wheels = createWheels(idForWheel);
+        tempsPlane->wings = createWings(idForWings);
+        
     }
     return;
 }
 
+void setAvailability(Plane* plane, bool availability) {
+    plane->isAvailable = availability;
+}
+
+char** getAvailablePlanes(Plane* plane, int numberOfPlanes){
+    char** planeIds = malloc(numberOfPlanes * sizeof(char*));
+    for (int i = 0; i < numberOfPlanes; i++) {
+        planeIds[i] = plane[i].id;
+    }
+    return planeIds;
+}
+
+void setPlaneType(Plane* plane) {
+    int idWing0 = plane->wings->id;
+
+}
 
 int main(int argc, char** argv) {
     printf("Hello\n");
@@ -86,35 +112,37 @@ int main(int argc, char** argv) {
     /* PARTIE 2 - [10 points] */
 
     /* Create wheel - [2 points] */
-    Wheel* wheels = createWheels(id);    
-    printf("%d", wheels[3].isRealWheel);
+    Wheel* wheels = createWheels(id);
 
     /* Create wing - [4 points] */
     
     long longId = 1;
     Wing* wings = createWings(longId);
-    printf("%d", wings[0].id[8]);
     
 
     /* Create plane - [4 points] */
-    /*
-    int numberOfPlanes = 3;
+    
+    int numberOfPlanes = 2;
+    char* ids = "toto";
     Plane* planes = malloc(sizeof(Plane) * numberOfPlanes);
-    createPlanes(planes, *id, 3);
-    */
+    createPlanes(planes, ids, 3);
+    printf("id plane 0: %s \n", planes[0].id);
+    printf("is Available plane 0: %d \n", planes[0].isAvailable);
+    
 
     /* PARTIE 3 - [6 points] */
 
     /* Set availabilities - [1 point] */
-    /*
-    Plane plane = planes[0];
+    
+    Plane* plane = &(planes[0]);
     setAvailability(plane, true);
-    */
+    printf("Availability plane after modification: %d \n", plane->isAvailable);
+    
 
     /* Get available planes - [1 point] */
-    /*
-    getAvailablePlanes(planes, numberOfPlanes);
-    */
+    
+    char** planeAvalible = getAvailablePlanes(planes, numberOfPlanes);
+    printf("GetplaneAvalible: %s \n", planeAvalible[0]);
 
     /* Classify planes - [2 points] */
     /*
