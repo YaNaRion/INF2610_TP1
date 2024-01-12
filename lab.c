@@ -99,14 +99,15 @@ char** getAvailablePlanes(Plane* plane, int numberOfPlanes){
 }
 
 void setPlaneType(Plane* plane) {
-    int idWing0 = plane->wings->id;
+    int idWing0 = *(plane->wings->id);
     int idWingMod = idWing0 % 9;
     if (idWingMod < 3) {
-        plane->planeType = "small";
+        strcpy(plane->planeType, "Small");
+        //plane->planeType = "small";
     } else if (idWingMod < 6) {
-        /* code */
+        strcpy(plane->planeType, "Medium");
     } else if (idWingMod < 8) {
-        /* code */
+        strcpy(plane->planeType, "Large");
     }
     
     
@@ -155,10 +156,11 @@ int main(int argc, char** argv) {
     printf("GetplaneAvalible: %s \n", planeAvalible[0]);
 
     /* Classify planes - [2 points] */
-    /*
-    Plane plane = planes[1];
-    setPlaneType(plane);
-    */
+    
+    Plane* planeType = &(planes[1]);
+    setPlaneType(planeType);
+    printf("plane type: %s \n", planeType->planeType);
+    
 
     /* Return type specific planes - [2 points] */
     /*
