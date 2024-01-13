@@ -114,6 +114,20 @@ void setPlaneType(Plane* plane) {
 
 }
 
+Plane* getPlanesByType(Plane* planes, char type[], int planeCount){
+
+    Plane* validPlanes = malloc(sizeof(Plane));
+    int validPlaneCount = 0;
+    for( int i = 0; i < planeCount; i++){
+        if(strcmp(type, planes[i].planeType)) {
+            validPlanes[validPlaneCount++] = planes[i];
+        }
+    }
+
+    return validPlanes;
+}
+
+
 int main(int argc, char** argv) {
     printf("Hello\n");
     /* Remove comment once the code is completed for the given section to test */
@@ -163,8 +177,8 @@ int main(int argc, char** argv) {
     
 
     /* Return type specific planes - [2 points] */
-    /*
-    char planeType[] = "Small";
-    getPlanesByType(planes, planeType,numberOfPlanes);
-    */
+    
+    char planeTypeTest[] = "Small";
+    Plane* typedPlanes = getPlanesByType(planes, planeTypeTest,numberOfPlanes);
+    
 }
