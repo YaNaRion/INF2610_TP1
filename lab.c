@@ -103,24 +103,27 @@ void setPlaneType(Plane* plane) {
     int idWingMod = idWing0 % 9;
     if (idWingMod < 3) {
         strcpy(plane->planeType, "Small");
-        //plane->planeType = "small";
+//plane->planeType = "small";
     } else if (idWingMod < 6) {
         strcpy(plane->planeType, "Medium");
     } else if (idWingMod < 8) {
         strcpy(plane->planeType, "Large");
     }
     
-    
+
 
 }
 
 Plane* getPlanesByType(Plane* planes, char type[], int planeCount){
 
     Plane* validPlanes = malloc(sizeof(Plane));
-    int validPlaneCount = 0;
+    int validPlaneCount = 1;
     for( int i = 0; i < planeCount; i++){
-        if(strcmp(type, planes[i].planeType)) {
-            validPlanes[validPlaneCount++] = planes[i];
+        bool str = strcmp(planes[i].planeType, type);
+        if(!str) {
+            realloc(validPlanes ,sizeof(Plane)*validPlaneCount);
+            validPlanes[validPlaneCount-1] = planes[i];
+            validPlaneCount++;
         }
     }
 
@@ -171,14 +174,15 @@ int main(int argc, char** argv) {
 
     /* Classify planes - [2 points] */
     
-    Plane* planeType = &(planes[1]);
+    Plane* planeType = &(planes[0]);
     setPlaneType(planeType);
     printf("plane type: %s \n", planeType->planeType);
     
 
     /* Return type specific planes - [2 points] */
     
-    char planeTypeTest[] = "Small";
+    char* planeTypeTest = "Small";
     Plane* typedPlanes = getPlanesByType(planes, planeTypeTest,numberOfPlanes);
-    
+    printf("plane type: %s \n", typedPlanes[0].planeType);
+        
 }
