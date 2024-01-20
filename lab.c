@@ -10,7 +10,6 @@
 #include <stdbool.h>
 #include <string.h>
 
-
 struct Plane {
     char planeType[10];
     bool isAvailable;
@@ -32,9 +31,9 @@ struct Wheel {
 typedef struct Wheel Wheel;
 
 Wheel* createWheels(int id) {
-    int numberWheel = 7;
-    Wheel* wheels = malloc(numberWheel * sizeof(Wheel));
-    for (int i = 0; i < numberWheel; i++) {
+    const int NUMBER_OF_WHEEL = 7;
+    Wheel* wheels = malloc(NUMBER_OF_WHEEL * sizeof(Wheel));
+    for (int i = 0; i < NUMBER_OF_WHEEL; i++) {
         Wheel tempWheel;
         tempWheel.id = id;
         tempWheel.isRealWheel = i >= 3;
@@ -57,9 +56,9 @@ void populateWingAttributes(Wing* wingParam, long id) {
 }
 
 Wing* createWings(long id) {
-    int numberWings = 2;
-    Wing* wings = malloc(numberWings * sizeof(Wheel));
-    for (int i = 0; i < numberWings; i++) {
+    const int NUMBER_OF_WING = 2;
+    Wing* wings = malloc(NUMBER_OF_WING * sizeof(Wheel));
+    for (int i = 0; i < NUMBER_OF_WING; i++) {
         Wing tempWing;
         populateWingAttributes(&tempWing, id);
         wings[i] = tempWing;
@@ -116,12 +115,12 @@ void setPlaneType(Plane* plane) {
 
 Plane* getPlanesByType(Plane* planes, char type[], int planeCount){
 
-    Plane* validPlanes = malloc(sizeof(Plane));
+    Plane* validPlanes = malloc(sizeof(Plane*));
     int validPlaneCount = 1;
     for( int i = 0; i < planeCount; i++){
         bool str = strcmp(planes[i].planeType, type);
         if(!str) {
-            realloc(validPlanes ,sizeof(Plane)*validPlaneCount);
+            realloc(validPlanes ,sizeof(Plane*)*validPlaneCount);
             validPlanes[validPlaneCount-1] = planes[i];
             validPlaneCount++;
         }
@@ -184,5 +183,5 @@ int main(int argc, char** argv) {
     char* planeTypeTest = "Small";
     Plane* typedPlanes = getPlanesByType(planes, planeTypeTest,numberOfPlanes);
     printf("plane type: %s \n", typedPlanes[0].planeType);
-        
+    
 }
