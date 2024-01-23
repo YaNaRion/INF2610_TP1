@@ -1,6 +1,6 @@
 /* INF2610 - TP1
-/ Matricule 1 : 
-/ Matricule 2 : 
+/ Matricule 1 : 2198643
+/ Matricule 2 : 2207643
 */
 #include <stdlib.h>
 #include <time.h>
@@ -120,7 +120,7 @@ Plane* getPlanesByType(Plane* planes, char type[], int planeCount){
     for( int i = 0; i < planeCount; i++){
         bool str = strcmp(planes[i].planeType, type);
         if(!str) {
-            realloc(validPlanes ,sizeof(Plane*)*validPlaneCount);
+            validPlanes = realloc(validPlanes ,sizeof(Plane*)*validPlaneCount);
             validPlanes[validPlaneCount-1] = planes[i];
             validPlaneCount++;
         }
@@ -183,5 +183,15 @@ int main(int argc, char** argv) {
     char* planeTypeTest = "Small";
     Plane* typedPlanes = getPlanesByType(planes, planeTypeTest,numberOfPlanes);
     printf("plane type: %s \n", typedPlanes[0].planeType);
+
+
+
+    for (int i = 0; i < 2; i++) // voir NUMBER_OF_WING dans createWing()
+        free(wings[i].id);
+    free(planeAvalible);
+    free(wheels);
+    free(wings);
+    free(planes);
+    free(typedPlanes);
     
 }
